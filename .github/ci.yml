@@ -1,0 +1,31 @@
+name: Node CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download your repo into the runner
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install Node.js runtime and cache dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      # Step 3: Install clean dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Step 4: Run the test suite
+      - name: Run unit tests
+        run: npm test
